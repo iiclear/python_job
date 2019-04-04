@@ -1,0 +1,26 @@
+import threading
+import time
+from queue import Queue
+
+def music(func):
+    for i in range(2):
+        print("I was listening to %s %s"%(func, time.ctime()))
+        time.sleep(1)
+
+def movie(func):
+    for i in range(2):
+        print('i was at the %s! %s'%(func, time.ctime()))
+        time.sleep(5)
+
+threads = []
+t1 = threading.Thread(target=music, args=('爱情买卖',))
+threads.append(t1)
+t2 = threading.Thread(target=movie, args=('阿凡达',))
+threads.append(t2)
+
+if __name__ == '__main__':
+    for t in threads:
+        t.setDaemon(True)
+        t.start()
+    t.join()
+    print("all ove %s"%time.ctime())
